@@ -45,6 +45,19 @@ public class DBManager {
         }
 	}
 	
+	/*
+	 * Runs update, insert, or delete query with given string
+	 */
+	public void queryQuiet(String sqlQuery) {
+		try {
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate(sqlQuery);
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
 }
 
 	
