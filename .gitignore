@@ -4,3 +4,5 @@
 .project
 .settings/org.eclipse.core.resources.prefs
 .settings/org.eclipse.jdt.core.prefs
+bin/application/Main.class
+*.class
