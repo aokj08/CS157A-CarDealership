@@ -25,12 +25,9 @@ public class Main {
 	 * For testing purposes
 	 */
 	public void createTable() {
-		/*
-		 * For simplicity, just create all the tables here. 
-		 */
 		dbM.queryQuiet(
-				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY, address STRING NOT NULL, city STRING NOT NULL,"
-				+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL);"
+				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY AUTOINCREMENT, address STRING NOT NULL, city STRING NOT NULL,"
+				+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL, password STRING NOT NULL);"
 		);
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Invoice(invoiceID INTEGER NOT NULL, customerID_FK INTEGER references Customer(customerID),"
@@ -54,7 +51,16 @@ public class Main {
 	 * For testing purposes
 	 */
 	public void insertTable() {
-		dbM.queryQuiet(String.format("INSERT INTO Customer values(%d, '%s', '%s', %d, '%s', '%s', '%s', '%s');", 1,"addr","city", 11111, "ca", "US", "0161302013", "email"));
+		dbM.queryQuiet(String.format("INSERT INTO Customer(address,city,zip,state,country,phone,email,password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", "addr","city", 11111, "ca", "US", "0161302013", "email", "pw"));
+		dbM.queryQuiet(String.format("INSERT INTO Customer(address,city,zip,state,country,phone,email,password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", "addr","city", 22222, "ca2", "US2", "0161302013", "email2", "pw2"));
+		dbM.queryQuiet(String.format("INSERT INTO Customer(address,city,zip,state,country,phone,email,password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", "addr","city", 33333, "ca", "U3S", "0161302013", "email", "pw3"));
+	}
+
+	/**
+	 * For testing purposes
+	 */
+	public void dropTable() {
+		dbM.queryQuiet("DROP TABLE Customer;");
 	}
 
 	/**
@@ -79,8 +85,9 @@ public class Main {
 		}
 	}
 	public static void main(String[] args) {
-		// Main mainObj = new Main();
-		// mainObj.createTable();
+		Main mainObj = new Main();
+		mainObj.createTable();
+		// mainObj.dropTable();
 		// mainObj.insertTable();
 		// mainObj.queryTable();
 		try {
