@@ -3,7 +3,10 @@ package application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.UIManager;
+
 import database.DBManager;
+import gui.LoginUI;
 
 public class Main {
 
@@ -76,10 +79,20 @@ public class Main {
 		}
 	}
 	public static void main(String[] args) {
-		Main mainObj = new Main();
-		mainObj.createTable();
-		mainObj.insertTable();
-		mainObj.queryTable();
+		// Main mainObj = new Main();
+		// mainObj.createTable();
+		// mainObj.insertTable();
+		// mainObj.queryTable();
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Display the login UI
+        LoginUI loginUI = new LoginUI();
+        loginUI.setVisible(true);
+    
 		
 	}
 
