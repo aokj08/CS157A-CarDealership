@@ -6,3 +6,4 @@
 .settings/org.eclipse.jdt.core.prefs
 
 *.db
+src/gui/LoginUI.java
