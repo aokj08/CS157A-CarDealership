@@ -1,6 +1,6 @@
 package search;
 
-import java.sql.ResultSet;
+import java.sql.ResultSet; 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,4 +57,40 @@ public class InvoiceManager {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+	
+	/**
+	 * Returns a result set containing invoices linked to only a signle customer.
+	 * 
+	 */
+	public ResultSet getInvoiceInfoByCustomer(int customerID) {
+		ResultSet invoiceInfo = dbManager.query("SELECT * FROM Invoice where customerID_FK = " + customerID + ";");
+		try {
+			if (invoiceInfo == null || invoiceInfo.next() == false) {
+				return new ArrayList<InvoiceInfo>();
+			}
+			List<InvoiceInfo> invoiceInfoList = new ArrayList<InvoiceInfo>();
+			invoiceInfoList.add(new InvoiceInfo(
+				invoiceInfo.getInt("invoiceID"),
+				invoiceInfo.getInt("customerID_FK"),
+				invoiceInfo.getString("purchaseType"),
+				invoiceInfo.getInt("quantity"),
+				invoiceInfo.getInt("unit_price"),
+				invoiceInfo.getString("data")
+				
+			));
+			while (invoiceInfo.next() == true) {
+				invoiceInfoList.add(new InvoiceInfo(
+						invoiceInfo.getInt("invoiceID"),
+						invoiceInfo.getInt("customerID_FK"),
+						invoiceInfo.getString("purchaseType"),
+						invoiceInfo.getInt("quantity"),
+						invoiceInfo.getInt("unit_price"),
+						invoiceInfo.getString("data")
+				));
+			}
+			return invoiceInfoList;
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e.getMessage());
+		}
 }
