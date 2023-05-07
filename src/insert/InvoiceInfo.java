@@ -5,7 +5,11 @@
 
 package insert;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import database.DBManager;
 
 public class InvoiceInfo {
 	
@@ -25,13 +29,14 @@ public class InvoiceInfo {
 	
 	/**
 	 * will insert a new invoice into the invoice table and then car_invoice table
+	 * @throws SQLException
 	 */
-	public void makeInvoice(int invoiceID, int customerID, ArrayList<Integer> vins, String purchaseType, String date)
+	public void makeInvoice(int invoiceID, int customerID, ArrayList<Integer> vins, String purchaseType, String date) throws SQLException
 	{
 		int price = 0;
 		if (purchaseType.equals("buy"))
 		{
-			for (int i  0; i < vins.size(); i++)
+			for (int i = 0; i < vins.size(); i++)
 			{
 				ResultSet carPrices = dbManager.query("SELECT buy_price FROM Car WHERE VIN = " + vins.get(i) + ";");
 				while(carPrices.next())
@@ -42,7 +47,7 @@ public class InvoiceInfo {
 		}
 		else if (purchaseType.equals("lease"))
 		{
-			for (int i  0; i < vins.size(); i++)
+			for (int i = 0; i < vins.size(); i++)
 			{
 				ResultSet carPrices = dbManager.query("SELECT lease_price FROM Car WHERE VIN = " + vins.get(i) + ";");
 				while(carPrices.next())
@@ -51,27 +56,27 @@ public class InvoiceInfo {
 				}
 			}
 		}
-		dbManager.quietQuery("INSERT INTO Invoice VALUES (" + invoiceID + ", " + customerID + ", \'" + purchaseType + "\', " + vins.size() + ", " + price + ", \'" + date + "\');")
-		for (int i  0; i < vins.size(); i++)
+		dbManager.queryQuiet("INSERT INTO Invoice VALUES (" + invoiceID + ", " + customerID + ", \'" + purchaseType + "\', " + vins.size() + ", " + price + ", \'" + date + "\');");
+		for (int i = 0; i < vins.size(); i++)
 		{
-			dbManager.quietQuery("INSERT INTO Car_Invoice VALUES (" + invoiceID + ", " + vins.get(i) + ");");
-			dbManager.quietQuery("UPDATE Car SET InvoiceID_FK = " + invoiceID + ", CustomerID_FK = " + customerID + "WHERE VIN = " + vins.get(i));
+			dbManager.queryQuiet("INSERT INTO Car_Invoice VALUES (" + invoiceID + ", " + vins.get(i) + ");");
+			dbManager.queryQuiet("UPDATE Car SET InvoiceID_FK = " + invoiceID + ", CustomerID_FK = " + customerID + "WHERE VIN = " + vins.get(i));
 		}
 	}
 	
 	
-	public void insertDealership(int id, String location, int address, int zip, String city, String state, String coutnry)
+	public void insertDealership(int id, String location, int address, int zip, String city, String state, String country)
 	{
-		dbManager.quietQuery("INSERT INTO Dealership VALUES (" + id + ", \'" + location + "\', " + address + ", " + zip + ", \'" + city + "\', \'" + state + "\', \'" + country + "\');");
+		dbManager.queryQuiet("INSERT INTO Dealership VALUES (" + id + ", \'" + location + "\', " + address + ", " + zip + ", \'" + city + "\', \'" + state + "\', \'" + country + "\');");
 	}
 	
 	public void insertCar(int vin, String color, int buy, int lease, String producer, int dealID)
 	{
-		dbManager.quietQuery("INSERT INTO Car VALUES ("  + vin + ", \'" + color + "\', " + buy + ", " + lease + ", \'" + producer + "\', " + dealID + ");");
+		dbManager.queryQuiet("INSERT INTO Car VALUES ("  + vin + ", \'" + color + "\', " + buy + ", " + lease + ", \'" + producer + "\', " + dealID + ");");
 	}
 	
 	public void insertCustomer(int customerID, String address, String city, int zip, String state, String country, int phone, String email)
 	{
-		dbManager.quietQuery("INSERT INTO Customer VALUES (" + customerID + ", \'" + address + "\', \'" + city + "\', " + zip + ", \'" + state + "\', \'" + country + "\', " + phone + ", \'" + email + "\');");
+		dbManager.queryQuiet("INSERT INTO Customer VALUES (" + customerID + ", \'" + address + "\', \'" + city + "\', " + zip + ", \'" + state + "\', \'" + country + "\', " + phone + ", \'" + email + "\');");
 	}
 }
