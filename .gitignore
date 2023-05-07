@@ -1,9 +1,10 @@
 
-.classpath
-.gitattributes
-.project
-.settings/org.eclipse.core.resources.prefs
-.settings/org.eclipse.jdt.core.prefs
+*.classpath
+*.gitattributes
+*.project
+*.settings/org.eclipse.core.resources.prefs
+*.settings/org.eclipse.jdt.core.prefs
+*.db
 
 *.db
 src/gui/LoginUI.java
