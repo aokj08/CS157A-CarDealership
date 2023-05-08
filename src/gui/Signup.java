@@ -105,14 +105,14 @@ public class Signup extends JFrame implements ActionListener {
             String phone = phoneField.getText();
 
             custInfo = new CustomerInfo(address, city, Integer.valueOf(zip), state, country, phone, email, String.valueOf(password));
-            custInfo.insertCustomerInfo();
+            dbM.queryQuiet(String.format("INSERT INTO Customer(address, city, zip, state, country, phone, email, password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", 
+        address, city, Integer.valueOf(zip), state, country, phone, email, String.valueOf(password)));
             /**
              * If have time we can implement a check on email, if exists return fail
              */
             JOptionPane.showMessageDialog(this,
                     "Your account has been successfully created!",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
-            new Homepage();
         } else if (e.getSource() == cancelButton) {
             dispose();
         }

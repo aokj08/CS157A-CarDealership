@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import database.DBManager;
 
 public class CustomerInfo {
-    private DBManager dbM;
+    private static DBManager dbM = DBManager.getDBManager();
 
     private int custId;
     private String addr;
@@ -22,7 +22,6 @@ public class CustomerInfo {
      * Used for returning CustomerInfo
      */
     public CustomerInfo(int custId, String addr, String city, int zip, String state, String country, String email, String phone, String password) {
-        dbM = DBManager.getDBManager();
         this.custId = custId;
         this.addr = addr;
         this.city = city;
@@ -38,7 +37,6 @@ public class CustomerInfo {
      * Used for inserting customer info
      */
     public CustomerInfo(String addr, String city, int zip, String state, String country, String email, String phone, String password) {
-        dbM = DBManager.getDBManager();
         this.addr = addr;
         this.city = city;
         this.zip = zip;
