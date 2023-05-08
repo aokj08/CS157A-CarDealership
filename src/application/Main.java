@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.swing.UIManager;
 
 import database.DBManager;
-import gui.LoginUI;
 
 public class Main {
 
