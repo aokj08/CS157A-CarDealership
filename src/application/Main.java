@@ -3,7 +3,10 @@ package application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.UIManager;
+
 import database.DBManager;
+import gui.LoginUI;
 
 public class Main {
 
@@ -21,6 +24,7 @@ public class Main {
 	 * For testing purposes
 	 */
 	public void createTable() {
+
 		/*
 		 * For simplicity, just create all the tables here.
 		 */
@@ -45,6 +49,7 @@ public class Main {
 	 * For testing purposes
 	 */
 	public void insertTable() {
+
 		dbM.queryQuiet(String.format("INSERT INTO Customer values(%d, '%s', '%s', %d, '%s', '%s', '%s', '%s');", 2,
 				"addr", "city", 11111, "ca", "US", "0161302013", "email"));
 	}
@@ -73,6 +78,10 @@ public class Main {
 	public static void main(String[] args) {
 		Main mainObj = new Main();
 		mainObj.createTable();
+
+    
+		
+=======
 		mainObj.insertTable();
 		mainObj.queryTable();
 
