@@ -35,3 +35,4 @@ src/gui/HomePage.java
 *.prefs
 *.log
 .metadata/.plugins/org.eclipse.ui.intro/introstate
+*.class
