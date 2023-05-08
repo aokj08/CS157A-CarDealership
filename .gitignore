@@ -11,3 +11,25 @@ src/gui/LoginUI.java
 src/gui/SignUpUI.java
 src/gui/HomePage.java
 
+.metadata/.lock
+.DS_Store
+*.json
+*.ini
+*.xml
+*.xml
+*.setup
+.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache
+*.dat
+*.txt
+.metadata/.plugins/org.eclipse.jdt.core/externalFilesCache
+.metadata/.plugins/org.eclipse.jdt.core/assumedExternalFilesCache
+*.xmi
+.metadata/.log
+.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/.location
+*.version
+*.index
+*.tree
+*.resources
+*.prefs
+*.log
+.metadata/.plugins/org.eclipse.ui.intro/introstate
