@@ -10,57 +10,48 @@ import gui.LoginUI;
 
 public class Main {
 
-	
-	private DBManager dbM; //We use dbM as a handle to the database.
+	private DBManager dbM; // We use dbM as a handle to the database.
 
 	/**
 	 * Public constructor, instantiating mainObj and dbM.
 	 */
 	public Main() {
 		dbM = DBManager.getDBManager();
-		
+
 	}
 
 	/**
 	 * For testing purposes
 	 */
 	public void createTable() {
+
+		/*
+		 * For simplicity, just create all the tables here.
+		 */
 		dbM.queryQuiet(
-				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY AUTOINCREMENT, address STRING NOT NULL, city STRING NOT NULL,"
-				+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL, password STRING NOT NULL);"
-		);
+				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY, address STRING NOT NULL, city STRING NOT NULL,"
+						+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL);");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Invoice(invoiceID INTEGER NOT NULL, customerID_FK INTEGER references Customer(customerID),"
-				+ "purchase_type STRING NOT NULL, quantity INTEGER NOT NULL, unit_price INTEGER NOT NULL, data STRING NOT NULL);"
-		);
+						+ "purchase_type STRING NOT NULL, quantity INTEGER NOT NULL, unit_price INTEGER NOT NULL, data STRING NOT NULL);");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Dealership(dealershipID INTEGER PRIMARY KEY, location STRING NOT NULL, address STRING NOT NULL,"
-				+ "zip INTEGER NOT NULL, city STRING NOT NULL, state STRING NOT NULL, country STRING NOT NULL);"
-		);	
+						+ "zip INTEGER NOT NULL, city STRING NOT NULL, state STRING NOT NULL, country STRING NOT NULL);");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Car(VIN STRING PRIMARY KEY, color STRING NOT NULL, buy_price INTEGER NOT NULL, lease_price INTEGER NOT NULL,"
-				+ "producer STRING NOT NULL, dealershipID_FK INTEGER references Dealership(dealershipID), customerID_FK INTEGER references Customer(customerID),"
-				+ "invoiceID_FK INTEGER references Invoice(invoiceID));"	
-		);
+						+ "producer STRING NOT NULL, dealershipID_FK INTEGER references Dealership(dealershipID), customerID_FK INTEGER references Customer(customerID),"
+						+ "invoiceID_FK INTEGER references Invoice(invoiceID));");
 		dbM.queryQuiet(
-				"CREATE TABLE IF NOT EXISTS Car_Invoice(invoiceID_PK INTEGER, VIN_PK INTEGER, PRIMARY KEY(invoiceID_PK, VIN_PK));"
-		);	
+				"CREATE TABLE IF NOT EXISTS Car_Invoice(invoiceID_PK INTEGER, VIN_PK INTEGER, PRIMARY KEY(invoiceID_PK, VIN_PK));");
 	}
 
 	/**
 	 * For testing purposes
 	 */
 	public void insertTable() {
-		dbM.queryQuiet(String.format("INSERT INTO Customer(address,city,zip,state,country,phone,email,password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", "addr","city", 11111, "ca", "US", "0161302013", "email", "pw"));
-		dbM.queryQuiet(String.format("INSERT INTO Customer(address,city,zip,state,country,phone,email,password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", "addr","city", 22222, "ca2", "US2", "0161302013", "email2", "pw2"));
-		dbM.queryQuiet(String.format("INSERT INTO Customer(address,city,zip,state,country,phone,email,password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", "addr","city", 33333, "ca", "U3S", "0161302013", "email", "pw3"));
-	}
 
-	/**
-	 * For testing purposes
-	 */
-	public void dropTable() {
-		dbM.queryQuiet("DROP TABLE Customer;");
+		dbM.queryQuiet(String.format("INSERT INTO Customer values(%d, '%s', '%s', %d, '%s', '%s', '%s', '%s');", 2,
+				"addr", "city", 11111, "ca", "US", "0161302013", "email"));
 	}
 
 	/**
@@ -68,8 +59,8 @@ public class Main {
 	 */
 	public void queryTable() {
 		ResultSet rs = dbM.query("SELECT * FROM Customer;");
-		try{	
-			while(rs.next()) {
+		try {
+			while (rs.next()) {
 				System.out.println(rs.getInt("customerID"));
 				System.out.println(rs.getString("address"));
 				System.out.println(rs.getString("city"));
@@ -79,28 +70,21 @@ public class Main {
 				System.out.println(rs.getString("phone"));
 				System.out.println(rs.getString("email"));
 			}
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+
 	public static void main(String[] args) {
 		Main mainObj = new Main();
 		mainObj.createTable();
-		// mainObj.dropTable();
-		// mainObj.insertTable();
-		// mainObj.queryTable();
-		try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        // Display the login UI
-        LoginUI loginUI = new LoginUI();
-        loginUI.setVisible(true);
     
 		
+=======
+		mainObj.insertTable();
+		mainObj.queryTable();
+
 	}
 
 }
