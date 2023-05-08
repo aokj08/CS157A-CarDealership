@@ -60,7 +60,7 @@ public class InvoiceInfo {
 		for (int i = 0; i < vins.size(); i++)
 		{
 			dbManager.queryQuiet("INSERT INTO Car_Invoice VALUES (" + invoiceID + ", " + vins.get(i) + ");");
-			dbManager.queryQuiet("UPDATE Car SET InvoiceID_FK = " + invoiceID + ", CustomerID_FK = " + customerID + "WHERE VIN = " + vins.get(i));
+			dbManager.queryQuiet("UPDATE Car SET InvoiceID_FK = " + invoiceID + ", CustomerID_FK = " + customerID + "WHERE VIN = " + vins.get(i) + ";");
 		}
 	}
 	
