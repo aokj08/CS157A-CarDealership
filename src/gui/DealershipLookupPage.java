@@ -37,13 +37,22 @@ public class DealershipLookupPage {
         JScrollPane scrollPane = new JScrollPane(table);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
+        //fetch all the dealerships and populate the table with each of them
+        dealerships = DealershipInfo.getAllDealershipsInfo();
+        for (int i = 0; i < dealerships.size(); i++)
+        {
+        	dealInstance = new Object[] { dealerships.get(i).getDealID(), dealerships.get(i).getAddress(), dealerships.get(i).getCity(), dealerships.get(i).getZipCode(), dealerships.get(i).getState(), dealerships.get(i).getCountry() };
+        	model.addRow(dealInstance);
+        }
+        
+
         // Add some sample data to the table
-        row1 = new Object[] { "1", "123 Main St", "San Francisco", "94102", "CA", "USA" };
-        row2 = new Object[] { "2", "456 Oak St", "San Jose", "95134", "CA", "USA" };
-        row3 = new Object[] { "3", "789 Elm St", "Oakland", "94601", "CA", "USA" };
-        model.addRow(row1);
-        model.addRow(row2);
-        model.addRow(row3);
+        //row1 = new Object[] { "1", "123 Main St", "San Francisco", "94102", "CA", "USA" };
+        //row2 = new Object[] { "2", "456 Oak St", "San Jose", "95134", "CA", "USA" };
+        //row3 = new Object[] { "3", "789 Elm St", "Oakland", "94601", "CA", "USA" };
+        //model.addRow(row1);
+        //model.addRow(row2);
+        //model.addRow(row3);
 
         // Create a JPanel for the search bar
         JPanel searchPanel = new JPanel();
@@ -54,9 +63,12 @@ public class DealershipLookupPage {
             public void actionPerformed(ActionEvent e) {
                 String zipCode = searchField.getText();
                 // Update the table with the search results
-                model.setRowCount(0); // clear the table
-                Object[] row = { "4", "789 Maple St", "Sunnyvale", "94086", "CA", "USA" };
-                model.addRow(row);
+                //model.setRowCount(0); // clear the table
+                //Object[] row = { "4", "789 Maple St", "Sunnyvale", "94086", "CA", "USA" };
+                //model.addRow(row);
+                DealershipInfo.focusDealership = DealershipInfo.getDealershipInfo(zipCode);
+                new Carbrowsingpage();
+                frame.dispose();
             }
         });
         searchPanel.add(searchField);
@@ -74,9 +86,14 @@ public class DealershipLookupPage {
                 searchField.setText("");
                 // Update the table with all the dealerships
                 model.setRowCount(0); // clear the table
-                model.addRow(row1);
-                model.addRow(row2);
-                model.addRow(row3);
+                for (int i = 0; i < dealerships.size(); i++)
+                {
+                	dealInstance = new Object[] { dealerships.get(i).getDealID(), dealerships.get(i).getAddress(), dealerships.get(i).getCity(), dealerships.get(i).getZipCode(), dealerships.get(i).getState(), dealerships.get(i).getCountry() };
+                	model.addRow(dealInstance);
+                }
+                //model.addRow(row1);
+                //model.addRow(row2);
+                //model.addRow(row3);
                 // Open the carbrowsing tab
                 new Carbrowsingpage();
                 // Close the current page
