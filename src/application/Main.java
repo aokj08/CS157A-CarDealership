@@ -28,8 +28,8 @@ public class Main {
 		 * For simplicity, just create all the tables here.
 		 */
 		dbM.queryQuiet(
-				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY, address STRING NOT NULL, city STRING NOT NULL,"
-						+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL);");
+				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY AUTOINCREMENT, address STRING NOT NULL, city STRING NOT NULL,"
+						+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL, password STRING NOT NULL);");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Invoice(invoiceID INTEGER NOT NULL, customerID_FK INTEGER references Customer(customerID),"
 						+ "purchase_type STRING NOT NULL, quantity INTEGER NOT NULL, unit_price INTEGER NOT NULL, data STRING NOT NULL);");
@@ -49,8 +49,8 @@ public class Main {
 	 */
 	public void insertTable() {
 
-		dbM.queryQuiet(String.format("INSERT INTO Customer values(%d, '%s', '%s', %d, '%s', '%s', '%s', '%s');", 2,
-				"addr", "city", 11111, "ca", "US", "0161302013", "email"));
+		dbM.queryQuiet(String.format("INSERT INTO Customer values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", 
+				"addr", "city", 11111, "ca", "US", "0161302013", "email", "pw"));
 	}
 
 	/**
@@ -68,6 +68,7 @@ public class Main {
 				System.out.println(rs.getString("country"));
 				System.out.println(rs.getString("phone"));
 				System.out.println(rs.getString("email"));
+				System.out.println(rs.getString("password"));
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e.getMessage());
