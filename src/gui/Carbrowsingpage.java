@@ -12,6 +12,7 @@ public class Carbrowsingpage {
     private JTable table;
     private JButton logoutButton;
     private JButton findDealershipButton;
+    private JButton backButton;
 
     public Carbrowsingpage() {
         // Create a JFrame
@@ -71,13 +72,22 @@ public class Carbrowsingpage {
             new DealershipLookupPage();
         });
 
+        // Create a JButton for going back to the employeepage
+        backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            new Employeepage();
+            frame.dispose();
+        });
+
         // Add the buttons to the buttonPanel
+        buttonPanel.add(backButton);
         buttonPanel.add(logoutButton);
         buttonPanel.add(findDealershipButton);
 
         // Add the header, main content, and buttons to the frame
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         frame.add(headerPanel, BorderLayout.NORTH);
+
         frame.add(mainPanel, BorderLayout.CENTER);
 
         // Make the frame visible

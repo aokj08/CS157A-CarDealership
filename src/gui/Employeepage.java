@@ -2,9 +2,11 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 public class Employeepage {
     private JFrame frame;
@@ -94,7 +96,12 @@ public class Employeepage {
                         String producer = producerField.getText();
 
                         // Add the new car to the database
+                        public void insertTable() {
 
+                            dbM.queryQuiet(String.format("INSERT INTO Car(VIN, Color, Buy_Price, Lease_Price, Producer) values('%s', '%s', %d, '%s', '%s');", 
+                                    vin, color, buyPrice, leasePrice, producer));
+                        }
+                    
                         // Display a success message
                         JOptionPane.showMessageDialog(addCarFrame, "Car added successfully!");
 
@@ -137,7 +144,7 @@ public class Employeepage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create new instance of DealershipLookupPage
-                Empdealershiplookup Empdealershiplookup = new Empdealershiplookup();
+                Carbrowsingpage Carbrowsingpage = new Carbrowsingpage();
                 // Close current frame
                 frame.dispose();
             }
@@ -204,6 +211,7 @@ public class Employeepage {
                 frame.dispose();
             }
         });
+
         panel.add(logoutButton);
 
         frame.add(panel);
