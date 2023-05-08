@@ -62,7 +62,7 @@ public class CustomerInfo {
     public CustomerInfo getCustomerInfo(int custId) {
         String addr ="", city="", state="", country="", phone="", email="", password="";
         int zip = -1;
-        ResultSet rs = dbM.query(String.format("SELECT * FROM Customer WHERE customerID = %d", custId));
+        ResultSet rs = dbM.query(String.format("SELECT * FROM Customer WHERE customerID = %d;", custId));
         if(rs != null) {
             try {
                 addr = rs.getString("address");
