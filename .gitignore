@@ -10,4 +10,6 @@
 src/gui/LoginUI.java
 src/gui/SignUpUI.java
 src/gui/HomePage.java
+*.metadata
+*.DS_Store
 
