@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.UIManager;
 
 import database.DBManager;
+import gui.*;
 
 public class Main {
 
@@ -49,10 +50,13 @@ public class Main {
 	 */
 	public void insertTable() {
 
-		dbM.queryQuiet(String.format("INSERT INTO Customer values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", 
+		dbM.queryQuiet(String.format("INSERT INTO Customer(address, city, zip, state, country, phone, email, password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", 
 				"addr", "city", 11111, "ca", "US", "0161302013", "email", "pw"));
 	}
 
+	public void dropTable() {
+		dbM.queryQuiet("DROP TABLE Customer;");
+	}
 	/**
 	 * For testing purposes
 	 */
@@ -77,8 +81,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main mainObj = new Main();
+		// mainObj.dropTable();
 		mainObj.createTable();
-		mainObj.insertTable();
+		// Signup su = new Signup();
+		// // mainObj.insertTable();
 		mainObj.queryTable();
 
 	}

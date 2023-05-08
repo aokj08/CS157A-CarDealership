@@ -4,13 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import database.DBManager;
+import insert.CustomerInfo;
+
 public class Signup extends JFrame implements ActionListener {
+
+    private DBManager dbM;
+    private CustomerInfo custInfo;
+
     private JLabel nameLabel, emailLabel, passwordLabel, addressLabel, zipLabel, stateLabel, countryLabel, phoneLabel;
     private JTextField nameField, emailField, addressField, zipField, stateField, countryField, phoneField;
     private JPasswordField passwordField;
     private JButton signupButton, cancelButton;
 
     public Signup() {
+        dbM = DBManager.getDBManager();
+
         setTitle("Sign Up");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,11 +40,6 @@ public class Signup extends JFrame implements ActionListener {
 
         setLayout(new GridLayout(9, 2));
 
-        nameLabel = new JLabel("Name:");
-        add(nameLabel);
-        nameField = new JTextField();
-        add(nameField);
-
         emailLabel = new JLabel("Email:");
         add(emailLabel);
         emailField = new JTextField();
@@ -50,6 +54,11 @@ public class Signup extends JFrame implements ActionListener {
         add(addressLabel);
         addressField = new JTextField();
         add(addressField);
+
+        nameLabel = new JLabel("City:");
+        add(nameLabel);
+        nameField = new JTextField();
+        add(nameField);
 
         zipLabel = new JLabel("Zip Code:");
         add(zipLabel);
@@ -84,7 +93,7 @@ public class Signup extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signupButton) {
-            String name = nameField.getText();
+            String city = nameField.getText(); //Changed to city
             String email = emailField.getText();
             char[] password = passwordField.getPassword();
             String address = addressField.getText();
@@ -93,9 +102,11 @@ public class Signup extends JFrame implements ActionListener {
             String country = countryField.getText();
             String phone = phoneField.getText();
 
-            // Perform sign up action here
-            // ...
-
+            custInfo = new CustomerInfo(address, city, Integer.valueOf(zip), state, country, phone, email, String.valueOf(password));
+            custInfo.insertCustomerInfo();
+            /**
+             * If have time we can implement a check on email, if exists return fail
+             */
             JOptionPane.showMessageDialog(this,
                     "Your account has been successfully created!",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
