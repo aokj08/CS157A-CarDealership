@@ -4,12 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import database.DBManager;
 import insert.CustomerInfo;
 
 public class Signup extends JFrame implements ActionListener {
 
-    private DBManager dbM;
     private CustomerInfo custInfo;
 
     private JLabel nameLabel, emailLabel, passwordLabel, addressLabel, zipLabel, stateLabel, countryLabel, phoneLabel;
@@ -18,7 +16,6 @@ public class Signup extends JFrame implements ActionListener {
     private JButton signupButton, cancelButton;
 
     public Signup() {
-        dbM = DBManager.getDBManager();
 
         setTitle("Sign Up");
         setSize(400, 350);
