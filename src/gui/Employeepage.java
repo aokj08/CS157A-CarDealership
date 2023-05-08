@@ -98,7 +98,7 @@ public class Employeepage {
                         // Add the new car to the database
                         public void insertTable() {
 
-                            dbM.queryQuiet(String.format("INSERT INTO Car(VIN, Color, Buy_Price, Lease_Price, Producer) values('%s', '%s', %d, '%s', '%s');", 
+                            dbM.queryQuiet(String.format("INSERT INTO Car(VIN, color, buy_price, lease_price, producer) values('%s', '%s', %d, '%s', '%s');", 
                                     vin, color, buyPrice, leasePrice, producer));
                         }
                     
