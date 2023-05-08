@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.swing.UIManager;
 
 import database.DBManager;
-import gui.LoginUI;
 
 public class Main {
 
@@ -78,10 +77,6 @@ public class Main {
 	public static void main(String[] args) {
 		Main mainObj = new Main();
 		mainObj.createTable();
-
-    
-		
-=======
 		mainObj.insertTable();
 		mainObj.queryTable();
 
