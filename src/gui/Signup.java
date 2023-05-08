@@ -1,6 +1,9 @@
 package gui;
 
 import javax.swing.*;
+
+import database.DBManager;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -9,6 +12,7 @@ import insert.CustomerInfo;
 public class Signup extends JFrame implements ActionListener {
 
     private CustomerInfo custInfo;
+    private static DBManager dbM;
 
     private JLabel nameLabel, emailLabel, passwordLabel, addressLabel, zipLabel, stateLabel, countryLabel, phoneLabel;
     private JTextField nameField, emailField, addressField, zipField, stateField, countryField, phoneField;
@@ -16,7 +20,8 @@ public class Signup extends JFrame implements ActionListener {
     private JButton signupButton, cancelButton;
 
     public Signup() {
-
+        dbM = DBManager.getDBManager();
+        
         setTitle("Sign Up");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,6 +112,7 @@ public class Signup extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this,
                     "Your account has been successfully created!",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
+            new Homepage();
         } else if (e.getSource() == cancelButton) {
             dispose();
         }

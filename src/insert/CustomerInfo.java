@@ -54,7 +54,7 @@ public class CustomerInfo {
      */
     public void insertCustomerInfo() {
         dbM.queryQuiet(String.format("INSERT INTO Customer(address, city, zip, state, country, phone, email, password)" +
-        " values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s')", 
+        " values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", 
         addr, city, zip, state, country, phone, email, password));
     }
 
