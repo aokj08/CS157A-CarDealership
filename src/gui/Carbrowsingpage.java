@@ -36,19 +36,34 @@ public class Carbrowsingpage {
         JScrollPane scrollPane = new JScrollPane(table);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
+        if (focusDealership == null)
+        {
+        	//fetch all the dealerships and populate the table with each of them
+            cars = CarInfo.getAllCarsInfo(true);
+        }
+        else
+        {
+        	cars = CarInfo.getDealershipCarsInfo(DealershipInfo.focusDealership.getDealID(), true);
+        }
+        for (int i = 0; i < cars.size(); i++)
+        {
+        	carInstance = new Object[] { cars.get(i).getVIN(), cars.get(i).getColor(), cars.get(i).getBuyPrice(), cars.get(i).getLeasePrice(), cars.get(i).getProducer(), cars.get(i).getDealershipOfCar(), cars.get(i).getCustomerOfCar(), cars.get(i).getInvoiceOfCar() };
+        	model.addRow(carInstance);
+        }
+
         // Add some sample data to the table
-        Object[] row1 = { "1", "Red", "$25,000", "$300/month", "Toyota" };
-        Object[] row2 = { "2", "Blue", "$20,000", "$250/month", "Honda" };
-        Object[] row3 = { "3", "Green", "$30,000", "$350/month", "Ford" };
-        Object[] row4 = { "4", "Black", "$22,000", "$275/month", "Chevrolet" };
-        Object[] row5 = { "5", "Silver", "$28,000", "$325/month", "BMW" };
-        Object[] row6 = { "6", "White", "$24,000", "$290/month", "Mercedes-Benz" };
-        model.addRow(row1);
-        model.addRow(row2);
-        model.addRow(row3);
-        model.addRow(row4);
-        model.addRow(row5);
-        model.addRow(row6);
+        //Object[] row1 = { "1", "Red", "$25,000", "$300/month", "Toyota" };
+        //Object[] row2 = { "2", "Blue", "$20,000", "$250/month", "Honda" };
+        //Object[] row3 = { "3", "Green", "$30,000", "$350/month", "Ford" };
+        //Object[] row4 = { "4", "Black", "$22,000", "$275/month", "Chevrolet" };
+        //Object[] row5 = { "5", "Silver", "$28,000", "$325/month", "BMW" };
+        //Object[] row6 = { "6", "White", "$24,000", "$290/month", "Mercedes-Benz" };
+        //model.addRow(row1);
+        //model.addRow(row2);
+        //model.addRow(row3);
+        //model.addRow(row4);
+        //model.addRow(row5);
+        //model.addRow(row6);
 
         // Create a JPanel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
