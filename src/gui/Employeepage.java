@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import database.DBManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,17 +93,15 @@ public class Employeepage {
                         // Get the values from the form fields
                         String vin = vinField.getText();
                         String color = colorField.getText();
-                        double buyPrice = Double.parseDouble(buyPriceField.getText());
-                        double leasePrice = Double.parseDouble(leasePriceField.getText());
+                        Integer buyPrice = Integer.parseInt(buyPriceField.getText());
+                        Integer leasePrice = Integer.parseInt(leasePriceField.getText());
                         String producer = producerField.getText();
 
                         // Add the new car to the database
-                        public void insertTable() {
+                        DBManager.getDBManager().queryQuiet(String.format(
+                                "INSERT INTO Car(VIN, color, buy_price, lease_price, producer) values('%s', '%s', %d, %d, '%s');",
+                                vin, color, buyPrice, leasePrice, producer));
 
-                            dbM.queryQuiet(String.format("INSERT INTO Car(VIN, color, buy_price, lease_price, producer) values('%s', '%s', %d, '%s', '%s');", 
-                                    vin, color, buyPrice, leasePrice, producer));
-                        }
-                    
                         // Display a success message
                         JOptionPane.showMessageDialog(addCarFrame, "Car added successfully!");
 
