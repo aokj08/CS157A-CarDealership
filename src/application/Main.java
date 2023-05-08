@@ -17,17 +17,14 @@ public class Main {
 	 */
 	public Main() {
 		dbM = DBManager.getDBManager();
+		//Create a default admin account in Employee table
+		createTable();
+		dbM.queryQuiet("INSERT INTO Employee(email, password) values('admin', 'admin');");
 
 	}
 
-	/**
-	 * For testing purposes
-	 */
 	public void createTable() {
 
-		/*
-		 * For simplicity, just create all the tables here.
-		 */
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Customer(customerID INTEGER PRIMARY KEY AUTOINCREMENT, address STRING NOT NULL, city STRING NOT NULL,"
 						+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL, password STRING NOT NULL);");
@@ -43,6 +40,9 @@ public class Main {
 						+ "invoiceID_FK INTEGER references Invoice(invoiceID));");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Car_Invoice(invoiceID_PK INTEGER, VIN_PK INTEGER, PRIMARY KEY(invoiceID_PK, VIN_PK));");
+		dbM.queryQuiet(
+				"CREATE TABLE IF NOT EXISTS Employee(employeeID INTEGER PRIMARY KEY AUTOINCREMENT, email STRING NOT NULL, password STRING NOT NULL)"
+		);
 	}
 
 	/**
@@ -80,12 +80,12 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Main mainObj = new Main();
+		new Main();
+		new Homepage();
 		// mainObj.dropTable();
-		mainObj.createTable();
 		// Signup su = new Signup();
 		// // mainObj.insertTable();
-		mainObj.queryTable();
+		// mainObj.queryTable();
 
 	}
 
