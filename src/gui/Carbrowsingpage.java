@@ -5,8 +5,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import database.DBManager;
 
 public class Carbrowsingpage {
+
+    private DBManager dbM;
 
     private JFrame frame;
     private JTable table;
@@ -15,6 +21,7 @@ public class Carbrowsingpage {
     private JButton backButton;
 
     public Carbrowsingpage() {
+        dbM = DBManager.getDBManager();
         // Create a JFrame
         frame = new JFrame("Car Browsing Page");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,6 +57,21 @@ public class Carbrowsingpage {
         model.addRow(row4);
         model.addRow(row5);
         model.addRow(row6);
+
+        ResultSet rs = dbM.query("SELECT * FROM Car;");
+        try {
+            while(rs.next()) { 
+                Object[] row = {rs.getString("VIN"),
+                                rs.getString("color"),
+                                "$" + Integer.toString(rs.getInt("buy_price")),
+                                "$" + Integer.toString(rs.getInt("lease_price")) + "/month",
+                                rs.getString("producer")
+                };
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // Create a JPanel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
