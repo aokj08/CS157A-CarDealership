@@ -3,9 +3,7 @@ package application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.UIManager;
-
-import database.DBManager;
+import database.*;
 import gui.*;
 
 public class Main {
@@ -55,7 +53,7 @@ public class Main {
 	}
 
 	public void dropTable() {
-		dbM.queryQuiet("DROP TABLE Customer;");
+		dbM.queryQuiet("DROP TABLE Car;");
 	}
 	/**
 	 * For testing purposes
@@ -80,8 +78,9 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		new Main();
+		Main obj = new Main();
 		new Homepage();
+		// obj.dropTable();
 	}
 
 }
