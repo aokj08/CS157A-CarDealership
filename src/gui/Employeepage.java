@@ -144,7 +144,7 @@ public class Employeepage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create new instance of DealershipLookupPage
-                Carbrowsingpage Carbrowsingpage = new Carbrowsingpage();
+                CarBrowsingPage Carbrowsingpage = new CarBrowsingPage();
                 // Close current frame
                 frame.dispose();
             }

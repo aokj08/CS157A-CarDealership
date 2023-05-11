@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 import database.DBManager;
 
-public class Carbrowsingpage {
+public class CarBrowsingPage {
 
     private DBManager dbM;
 
@@ -20,7 +20,7 @@ public class Carbrowsingpage {
     private JButton findDealershipButton;
     private JButton backButton;
 
-    public Carbrowsingpage() {
+    public CarBrowsingPage() {
         dbM = DBManager.getDBManager();
         // Create a JFrame
         frame = new JFrame("Car Browsing Page");
