@@ -1,19 +1,24 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-import database.DBManager;
-
+import java.util.Date;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+
+import database.DBManager;
 
 public class Employeepage {
+
+    private DBManager dbM;
+
     private JFrame frame;
     private JPanel panel;
     private JButton addButton;
+    private JButton addSoldButton;
     private JButton logoutButton;
     private JButton viewAvailableButton;
     private JButton viewSoldLeasedButton;
@@ -23,6 +28,7 @@ public class Employeepage {
     }
 
     private void createGUI() {
+        dbM = DBManager.getDBManager();
         frame = new JFrame("Employee Page");
         frame.setSize(600, 400);
         // Center the frame on the screen
@@ -38,6 +44,119 @@ public class Employeepage {
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 1));
 
+        addSoldButton = new JButton("Sell/Lease Car");
+        addSoldButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Create a new JFrame for adding a new car
+                JFrame addCarFrame = new JFrame("Sell/Lease Car");
+                addCarFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                addCarFrame.setSize(400, 300);
+                
+                // Center the frame on the screen
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                int centerX = (int) ((screenSize.getWidth() - addCarFrame.getWidth()) / 2);
+                int centerY = (int) ((screenSize.getHeight() - addCarFrame.getHeight()) / 2);
+                addCarFrame.setLocation(centerX, centerY);
+
+                // Create a JPanel for the form fields
+                JPanel formPanel = new JPanel();
+                formPanel.setLayout(new GridLayout(6, 2));
+
+                // Add form fields to the panel
+                JLabel vinLabel = new JLabel("VIN:");
+                JTextField vinField = new JTextField();
+                formPanel.add(vinLabel);
+                formPanel.add(vinField);
+
+                JLabel customerIDLabel = new JLabel("Customer ID:");
+                JTextField customerIDField = new JTextField();
+                formPanel.add(customerIDLabel);
+                formPanel.add(customerIDField);
+
+                JLabel purchaseTypeLabel = new JLabel("Purchase Type:");
+                JComboBox<String> typeDropdown = new JComboBox<>(new String[] { "Sell", "Lease" });
+                formPanel.add(purchaseTypeLabel);
+                formPanel.add(typeDropdown);
+
+                JLabel quantityLabel = new JLabel("Quantity:");
+                JTextField quantityField = new JTextField();
+                formPanel.add(quantityLabel);
+                formPanel.add(quantityField);
+
+                // Add the form panel to the JFrame
+                addCarFrame.add(formPanel, BorderLayout.CENTER);
+
+                // Add a button for submitting the form
+                JButton submitButton = new JButton("Confirm");
+                submitButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Get the values from the form fields
+                        String vin = vinField.getText();
+                        String customerID = customerIDField.getText();
+                        // Integer buyPrice = Integer.parseInt(buyPriceField.getText());
+                        // Integer leasePrice = Integer.parseInt(leasePriceField.getText());
+                        String quantity = quantityField.getText();
+
+                        // Get the car information from Car and put it into Invoice.
+                        ResultSet rs = dbM.query(String.format("SELECT * FROM Car WHERE VIN = %d;", Integer.valueOf(vin)));
+                        try {
+                            while(rs.next()) {
+                                int price = 0;
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                                String dateString = dateFormat.format(new Date());
+                                if(typeDropdown.getSelectedItem() == "Sold") {
+                                    price = rs.getInt("buy_price");
+                                }
+                                else {
+                                    price = rs.getInt("lease_price");
+                                }
+                                dbM.queryQuiet(String.format("INSERT INTO Invoice(customerID_FK, purchase_type, quantity, unit_price, date)" +
+                                " values(%d,'%s',%d,%d,'%s');", 
+                                Integer.valueOf(customerID), typeDropdown.getSelectedItem(), Integer.valueOf(quantity), price, dateString));
+                                // Display a success message
+                                JOptionPane.showMessageDialog(addCarFrame, "Transaction succeeded!");
+                            }
+                             // Display a failure message
+                            JOptionPane.showMessageDialog(addCarFrame, "Transaction failed!");
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        // Dispose of the current frame
+                        addCarFrame.dispose();
+                    }
+                });
+                // Add a button for cancelling the form
+                JButton cancelButton = new JButton("Cancel");
+                cancelButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Dispose of the current frame and show the Employee page
+                        addCarFrame.dispose();
+                        frame.setVisible(true);
+                    }
+                });
+
+                // Add the form panel, submit button, and cancel button to a new JPanel
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.setLayout(new FlowLayout());
+                buttonPanel.add(submitButton);
+                buttonPanel.add(cancelButton);
+
+                // Add the form panel and button panel to the frame
+                addCarFrame.add(formPanel, BorderLayout.CENTER);
+                addCarFrame.add(buttonPanel, BorderLayout.SOUTH);
+
+                // Make the JFrame visible
+                addCarFrame.setVisible(true);
+
+            }
+        });
+
+        panel.add(addSoldButton);
+
         addButton = new JButton("Add New Cars");
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -46,6 +165,7 @@ public class Employeepage {
                 JFrame addCarFrame = new JFrame("Add New Car");
                 addCarFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 addCarFrame.setSize(400, 300);
+                
                 // Center the frame on the screen
                 Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
                 int centerX = (int) ((screenSize.getWidth() - addCarFrame.getWidth()) / 2);
