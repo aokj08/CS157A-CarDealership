@@ -4,3 +4,4 @@
 - create invoice gui
 - add dealership text field to add car gui
 - have selet dealership go back to car browsing page, with only the cars at that dealership being displayed.
+- make public static variables in Main, one for currentUserID and another for currentUserType (enum)
