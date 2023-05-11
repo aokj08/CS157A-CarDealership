@@ -1,0 +1,3 @@
+- need to update the View available page (Show only Cars without customerID etc...)
+- add constraint to sell car. (If the car is being sold/leased has customerID_FK or invoiceID_FK, then return failure)
+
