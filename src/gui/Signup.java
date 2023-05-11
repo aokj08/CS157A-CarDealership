@@ -113,6 +113,7 @@ public class Signup extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this,
                     "Your account has been successfully created!",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         } else if (e.getSource() == cancelButton) {
             dispose();
         }
