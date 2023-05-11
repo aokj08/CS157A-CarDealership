@@ -28,7 +28,7 @@ public class Main {
 						+ "zip INTEGER NOT NULL, state STRING NOT NULL, country STRING NOT NULL, phone STRING NOT NULL, email STRING NOT NULL, password STRING NOT NULL);");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Invoice(invoiceID INTEGER NOT NULL, customerID_FK INTEGER references Customer(customerID),"
-						+ "purchase_type STRING NOT NULL, quantity INTEGER NOT NULL, unit_price INTEGER NOT NULL, data STRING NOT NULL);");
+						+ "purchase_type STRING NOT NULL, quantity INTEGER NOT NULL, unit_price INTEGER NOT NULL, date STRING NOT NULL);");
 		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Dealership(dealershipID INTEGER PRIMARY KEY, location STRING NOT NULL, address STRING NOT NULL,"
 						+ "zip INTEGER NOT NULL, city STRING NOT NULL, state STRING NOT NULL, country STRING NOT NULL);");
