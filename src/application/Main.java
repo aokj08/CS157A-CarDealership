@@ -82,11 +82,6 @@ public class Main {
 	public static void main(String[] args) {
 		new Main();
 		new Homepage();
-		// mainObj.dropTable();
-		// Signup su = new Signup();
-		// // mainObj.insertTable();
-		// mainObj.queryTable();
-
 	}
 
 }
