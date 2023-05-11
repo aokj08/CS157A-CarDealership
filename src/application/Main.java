@@ -84,8 +84,9 @@ public class Main {
 	 */
 	public void insertTable() {
 
-		dbM.queryQuiet(String.format("INSERT INTO Customer(address, city, zip, state, country, phone, email, password) values('%s', '%s', %d, '%s', '%s', '%s', '%s', '%s');", 
-				"addr", "city", 11111, "ca", "US", "0161302013", "email", "pw"));
+		dbM.queryQuiet(String.format("INSERT INTO Invoice(customerID_FK, purchase_type, quantity, unit_price, date)" +
+                                " values(%d,'%s',%d,%d,'%s');", 
+                                1, "typeDropdown.getSelectedItem()", 500, 123, "dateString"));
 	}
 
 	public void dropTable() {
@@ -104,18 +105,25 @@ public class Main {
 	 * For testing purposes
 	 */
 	public void queryTable() {
-		ResultSet rs = dbM.query("SELECT * FROM Employee;");
+		ResultSet rs = dbM.query("SELECT * FROM Invoice;");
 		try {
 			while (rs.next()) {
-				System.out.println(rs.getInt("employeeID"));
+				// CREATE TABLE IF NOT EXISTS Invoice(" +
+				// "invoiceID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				// "customerID_FK INTEGER references Customer(customerID), " +
+				// "purchase_type STRING NOT NULL, " + 
+				// "quantity INTEGER NOT NULL, " + 
+				// "unit_price INTEGER NOT NULL, " + 
+				// "date STRING NOT NULL);"
+				System.out.println(rs.getInt("invoiceID"));
 				// System.out.println(rs.getString("address"));
 				// System.out.println(rs.getString("city"));
-				// System.out.println(rs.getInt("zip"));
+				System.out.println(rs.getInt("customerID_FK"));
 				// System.out.println(rs.getString("state"));
-				// System.out.println(rs.getString("country"));
-				// System.out.println(rs.getString("phone"));
-				System.out.println(rs.getString("email"));
-				System.out.println(rs.getString("password"));
+				System.out.println(rs.getString("purchase_type"));
+				System.out.println(rs.getInt("quantity"));
+				System.out.println(rs.getString("unit_price"));
+				System.out.println(rs.getString("date"));
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e.getMessage());
@@ -124,8 +132,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main obj = new Main();
-		// obj.queryTable();
-		new Homepage();
+		// obj.insertTable();
+		obj.queryTable();
+		// new Homepage();
 		// obj.dropAll();
 	}
 
