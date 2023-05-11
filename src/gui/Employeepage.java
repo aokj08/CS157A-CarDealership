@@ -102,24 +102,27 @@ public class Employeepage {
                         // Get the car information from Car and put it into Invoice.
                         ResultSet rs = dbM.query(String.format("SELECT * FROM Car WHERE VIN = %d;", Integer.valueOf(vin)));
                         try {
-                            while(rs.next()) {
-                                int price = 0;
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-                                String dateString = dateFormat.format(new Date());
-                                if(typeDropdown.getSelectedItem() == "Sold") {
-                                    price = rs.getInt("buy_price");
+                            if(rs.next()) {
+                                while(rs.next()) {
+                                    int price = 0;
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                                    String dateString = dateFormat.format(new Date());
+                                    if(typeDropdown.getSelectedItem() == "Sold") {
+                                        price = rs.getInt("buy_price");
+                                    }
+                                    else {
+                                        price = rs.getInt("lease_price");
+                                    }
+                                    dbM.queryQuiet(String.format("INSERT INTO Invoice(customerID_FK, purchase_type, quantity, unit_price, date)" +
+                                    " values(%d,'%s',%d,%d,'%s');", 
+                                    Integer.valueOf(customerID), typeDropdown.getSelectedItem(), Integer.valueOf(quantity), price, dateString));
+                                    // Display a success message
+                                    JOptionPane.showMessageDialog(addCarFrame, "Transaction succeeded!");
                                 }
-                                else {
-                                    price = rs.getInt("lease_price");
-                                }
-                                dbM.queryQuiet(String.format("INSERT INTO Invoice(customerID_FK, purchase_type, quantity, unit_price, date)" +
-                                " values(%d,'%s',%d,%d,'%s');", 
-                                Integer.valueOf(customerID), typeDropdown.getSelectedItem(), Integer.valueOf(quantity), price, dateString));
-                                // Display a success message
-                                JOptionPane.showMessageDialog(addCarFrame, "Transaction succeeded!");
                             }
-                             // Display a failure message
-                            JOptionPane.showMessageDialog(addCarFrame, "Transaction failed!");
+                            else
+                                // Display a failure message
+                                JOptionPane.showMessageDialog(addCarFrame, "Transaction failed!");
                         } catch (SQLException e1) {
                             e1.printStackTrace();
                         }
