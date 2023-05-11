@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.util.Date;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -118,7 +120,7 @@ public class Employeepage {
                                 Integer.valueOf(customerID), typeDropdown.getSelectedItem(), Integer.valueOf(quantity), price, dateString));
                                 success = true;
                             }
-                            
+
                             if(success) {
                                 //Success message
                                 JOptionPane.showMessageDialog(addCarFrame, "Transaction succeeded!");
@@ -281,6 +283,14 @@ public class Employeepage {
         viewSoldLeasedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame = new JFrame("Car Browsing Page");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 300);
+        frame.setLocationRelativeTo(null); // Center the window on the screen
+
+  
+
+
                 // Create a new JFrame
                 JFrame soldLeasedFrame = new JFrame("Sold/Leased Cars");
                 soldLeasedFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -291,15 +301,25 @@ public class Employeepage {
                 int centerY = (int) ((screenSize.getHeight() - soldLeasedFrame.getHeight()) / 2);
                 soldLeasedFrame.setLocation(centerX, centerY);
                 // Create a new JTable with the relevant columns
-                String[] columnNames = { "Invoice ID", "Customer ID", "Purchase Type", "Quantity", "Unit Price",
-                        "Invoice Date" };
-                Object[][] data = {
-                        { 1, 101, "Lease", 2, 58000.00, "2023-05-01" },
-                        { 2, 102, "Sold", 1, 48000.99, "2022-04-28" },
-                        { 3, 103, "Sold", 3, 78000.45, "2019-04-15" },
-                        { 4, 104, "Lease", 1, 42000.79, "2023-03-30" }
-                };
-                JTable table = new JTable(data, columnNames);
+                String[] columnNames = { "Invoice ID", "Customer ID", "Purchase Type", "Quantity", "Unit Price", "Invoice Date" };
+                DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+                JTable table = new JTable(model);
+
+                ResultSet rs = dbM.query("SELECT * FROM Invoice;");
+                try {
+                    while(rs.next()) {
+                        int invoiceID = rs.getInt("invoiceID");
+                        int custID = rs.getInt("customerID_FK");
+                        String type = rs.getString("purchase_type");
+                        int quan = rs.getInt("quantity");
+                        int unit = rs.getInt("unit_price");
+                        String date = rs.getString("date");
+                        Object[] data = {invoiceID, custID, type, quan, unit, date};
+                        model.addRow(data);
+                    }
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
 
                 // Add the JTable to a JScrollPane and add the scroll pane to the JFrame
                 JScrollPane scrollPane = new JScrollPane(table);

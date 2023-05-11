@@ -44,20 +44,6 @@ public class CarBrowsingPage {
         JScrollPane scrollPane = new JScrollPane(table);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Add some sample data to the table
-        Object[] row1 = { "1", "Red", "$25,000", "$300/month", "Toyota" };
-        Object[] row2 = { "2", "Blue", "$20,000", "$250/month", "Honda" };
-        Object[] row3 = { "3", "Green", "$30,000", "$350/month", "Ford" };
-        Object[] row4 = { "4", "Black", "$22,000", "$275/month", "Chevrolet" };
-        Object[] row5 = { "5", "Silver", "$28,000", "$325/month", "BMW" };
-        Object[] row6 = { "6", "White", "$24,000", "$290/month", "Mercedes-Benz" };
-        model.addRow(row1);
-        model.addRow(row2);
-        model.addRow(row3);
-        model.addRow(row4);
-        model.addRow(row5);
-        model.addRow(row6);
-
         ResultSet rs = dbM.query("SELECT * FROM Car;");
         try {
             while(rs.next()) { 
