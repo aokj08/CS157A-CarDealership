@@ -65,12 +65,6 @@ public class Main {
 				"invoiceID_FK INTEGER references Invoice(invoiceID));"
 				);
 		dbM.queryQuiet(
-				"CREATE TABLE IF NOT EXISTS Car_Invoice(" + 
-				"invoiceID_PK INTEGER, " +
-				"VIN_PK INTEGER, " + 
-				"PRIMARY KEY(invoiceID_PK, VIN_PK));"
-				);
-		dbM.queryQuiet(
 				"CREATE TABLE IF NOT EXISTS Employee(" +
 				"employeeID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"email STRING NOT NULL, " +
