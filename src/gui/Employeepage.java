@@ -334,10 +334,6 @@ public class Employeepage {
         JScrollPane scrollPane = new JScrollPane(table);
         soldLeasedFrame.add(scrollPane);
 
-  // Add the JTable to a JScrollPane and add the scroll pane to the JFrame
-  JScrollPane scrollPane = new JScrollPane(table);
-  soldLeasedFrame.add(scrollPane);
-
   // Add a back button to the frame
   JButton backButton = new JButton("Back");
   backButton.addActionListener(new ActionListener() {
