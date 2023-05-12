@@ -9,3 +9,5 @@
 - make public static variables in Main, one for currentUserID and another for currentUserType (enum)
 - fix back button on Car browsing page
 - update customerID_FK and invoiceID_FK in Car table when selling/leasing car. (Aaron) DONE
+- upon loggig in, customers are taken to the available cars page, but can press the back button to go to the employee page. 
+     If a user is a customer, remove this back button.

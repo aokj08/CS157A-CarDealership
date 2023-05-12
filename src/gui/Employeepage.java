@@ -307,7 +307,7 @@ public class Employeepage {
         int centerY = (int) ((screenSize.getHeight() - soldLeasedFrame.getHeight()) / 2);
         soldLeasedFrame.setLocation(centerX, centerY);
         // Create a new JTable with the relevant columns
-        String[] columnNames = { "Invoice ID", "Customer ID", "Purchase Type", "Quantity", "Unit Price", "Invoice Date" };
+        String[] columnNames = { "VIN", "Invoice ID", "Customer ID", "Purchase Type", "Invoice Date" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(model);
 
@@ -317,11 +317,14 @@ public class Employeepage {
                 int invoiceID = rs.getInt("invoiceID");
                 int custID = rs.getInt("customerID_FK");
                 String type = rs.getString("purchase_type");
-                int quan = rs.getInt("quantity");
-                int unit = rs.getInt("unit_price");
                 String date = rs.getString("date");
-                Object[] data = {invoiceID, custID, type, quan, unit, date};
-                model.addRow(data);
+                ResultSet rs2 = dbM.query(String.format("SELECT * FROM Car WHERE CustomerID_FK = '%s';", custID));
+                while(rs2.next())
+                {
+                    String vin = rs2.getString("VIN");
+                    Object[] data = {vin, invoiceID, custID, type, date};
+                    model.addRow(data);
+                }
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
@@ -331,18 +334,22 @@ public class Employeepage {
         JScrollPane scrollPane = new JScrollPane(table);
         soldLeasedFrame.add(scrollPane);
 
-        // Add a back button to the frame
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Dispose of the current frame
-                soldLeasedFrame.dispose();
+  // Add the JTable to a JScrollPane and add the scroll pane to the JFrame
+  JScrollPane scrollPane = new JScrollPane(table);
+  soldLeasedFrame.add(scrollPane);
 
-                // Create a new EmployeePage and make it visible
-                createGUI();
-            }
-        });
+  // Add a back button to the frame
+  JButton backButton = new JButton("Back");
+  backButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Dispose of the current frame
+        soldLeasedFrame.dispose();
+
+        // Create a new EmployeePage and make it visible
+        createGUI();
+    }
+  });
         soldLeasedFrame.add(backButton, BorderLayout.SOUTH);
 
         // Make the JFrame visible
