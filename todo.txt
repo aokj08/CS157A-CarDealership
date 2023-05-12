@@ -1,8 +1,13 @@
-- need to update the View available page (Show only Cars without customerID etc...)
-- add constraint to sell car. (If the car is being sold/leased has customerID_FK or invoiceID_FK, then return failure)
-- get rid of car invoice table (we realized we should remove it through denormalization in physical design, CAR has INVOICE ID)
+- need to update the View available page (Show only Cars without customerID etc...) (Aaron) DONE
+- add constraint to sell car. (If the car is being sold/leased has customerID_FK or invoiceID_FK, then return failure) (Aaron) DONE
+    NOTE: Guess it is not needed, because it will not be shown on the available page and user probably dont know the vin
+    number assuming we are using legit VIN numebr.
+- get rid of car invoice table (we realized we should remove it through denormalization in physical design, CAR has INVOICE ID) (Aaron) DONE
 - create invoice gui
-- add dealership text field to add car gui
-- have select dealership go back to car browsing page, with only the cars at that dealership being displayed.
+- add dealership text field to add car gui (Aaron) 
+- have selet dealership go back to car browsing page, with only the cars at that dealership being displayed.
 - make public static variables in Main, one for currentUserID and another for currentUserType (enum)
-- upon loggig in, customers are taken to the available cars page, but can press the back button to go to the employee page. If a user is a customer, remove this back button.
+- fix back button on Car browsing page
+- update customerID_FK and invoiceID_FK in Car table when selling/leasing car. (Aaron) DONE
+- upon loggig in, customers are taken to the available cars page, but can press the back button to go to the employee page. 
+     If a user is a customer, remove this back button.
