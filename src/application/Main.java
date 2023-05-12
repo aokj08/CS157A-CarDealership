@@ -124,8 +124,8 @@ public class Main {
 	public static void main(String[] args) {
 		Main obj = new Main();
 		// obj.insertTable();
-		obj.queryTable();
-		// new Homepage();
+		// obj.queryTable();
+		new Homepage();
 		// obj.dropAll();
 	}
 
