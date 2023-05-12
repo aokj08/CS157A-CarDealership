@@ -3,5 +3,6 @@
 - get rid of car invoice table (we realized we should remove it through denormalization in physical design, CAR has INVOICE ID)
 - create invoice gui
 - add dealership text field to add car gui
-- have selet dealership go back to car browsing page, with only the cars at that dealership being displayed.
+- have select dealership go back to car browsing page, with only the cars at that dealership being displayed.
 - make public static variables in Main, one for currentUserID and another for currentUserType (enum)
+- upon loggig in, customers are taken to the available cars page, but can press the back button to go to the employee page. If a user is a customer, remove this back button.
