@@ -44,7 +44,7 @@ public class CarBrowsingPage {
         JScrollPane scrollPane = new JScrollPane(table);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
-        ResultSet rs = dbM.query("SELECT * FROM Car;");
+        ResultSet rs = dbM.query("SELECT * FROM Car WHERE customerID_FK IS NULL;");
         try {
             while(rs.next()) { 
                 Object[] row = {rs.getString("VIN"),
