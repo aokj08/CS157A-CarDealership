@@ -119,6 +119,8 @@ public class Employeepage {
                                 " values(%d,'%s',%d,%d,'%s');", 
                                 Integer.valueOf(customerID), typeDropdown.getSelectedItem(), Integer.valueOf(quantity), price, dateString));
                                 success = true;
+                                // Update Car table
+                                dbM.queryQuiet(String.format("UPDATE Car SET customerID_FK = %d WHERE VIN = '%s';", Integer.valueOf(customerID), vin));
                             }
 
                             if(success) {
@@ -288,61 +290,58 @@ public class Employeepage {
         frame.setSize(500, 300);
         frame.setLocationRelativeTo(null); // Center the window on the screen
 
-  
+        // Create a new JFrame
+        JFrame soldLeasedFrame = new JFrame("Sold/Leased Cars");
+        soldLeasedFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        soldLeasedFrame.setSize(600, 400);
+        // Center the frame on the screen
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int centerX = (int) ((screenSize.getWidth() - soldLeasedFrame.getWidth()) / 2);
+        int centerY = (int) ((screenSize.getHeight() - soldLeasedFrame.getHeight()) / 2);
+        soldLeasedFrame.setLocation(centerX, centerY);
+        // Create a new JTable with the relevant columns
+        String[] columnNames = { "Invoice ID", "Customer ID", "Purchase Type", "Quantity", "Unit Price", "Invoice Date" };
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        JTable table = new JTable(model);
 
+        ResultSet rs = dbM.query("SELECT * FROM Invoice;");
+        try {
+            while(rs.next()) {
+                int invoiceID = rs.getInt("invoiceID");
+                int custID = rs.getInt("customerID_FK");
+                String type = rs.getString("purchase_type");
+                int quan = rs.getInt("quantity");
+                int unit = rs.getInt("unit_price");
+                String date = rs.getString("date");
+                Object[] data = {invoiceID, custID, type, quan, unit, date};
+                model.addRow(data);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
 
-                // Create a new JFrame
-                JFrame soldLeasedFrame = new JFrame("Sold/Leased Cars");
-                soldLeasedFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                soldLeasedFrame.setSize(600, 400);
-                // Center the frame on the screen
-                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                int centerX = (int) ((screenSize.getWidth() - soldLeasedFrame.getWidth()) / 2);
-                int centerY = (int) ((screenSize.getHeight() - soldLeasedFrame.getHeight()) / 2);
-                soldLeasedFrame.setLocation(centerX, centerY);
-                // Create a new JTable with the relevant columns
-                String[] columnNames = { "Invoice ID", "Customer ID", "Purchase Type", "Quantity", "Unit Price", "Invoice Date" };
-                DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-                JTable table = new JTable(model);
+        // Add the JTable to a JScrollPane and add the scroll pane to the JFrame
+        JScrollPane scrollPane = new JScrollPane(table);
+        soldLeasedFrame.add(scrollPane);
 
-                ResultSet rs = dbM.query("SELECT * FROM Invoice;");
-                try {
-                    while(rs.next()) {
-                        int invoiceID = rs.getInt("invoiceID");
-                        int custID = rs.getInt("customerID_FK");
-                        String type = rs.getString("purchase_type");
-                        int quan = rs.getInt("quantity");
-                        int unit = rs.getInt("unit_price");
-                        String date = rs.getString("date");
-                        Object[] data = {invoiceID, custID, type, quan, unit, date};
-                        model.addRow(data);
-                    }
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+        // Add a back button to the frame
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Dispose of the current frame
+                soldLeasedFrame.dispose();
 
-                // Add the JTable to a JScrollPane and add the scroll pane to the JFrame
-                JScrollPane scrollPane = new JScrollPane(table);
-                soldLeasedFrame.add(scrollPane);
-
-                // Add a back button to the frame
-                JButton backButton = new JButton("Back");
-                backButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Dispose of the current frame
-                        soldLeasedFrame.dispose();
-
-                        // Create a new EmployeePage and make it visible
-                        createGUI();
-                    }
-                });
-                soldLeasedFrame.add(backButton, BorderLayout.SOUTH);
-
-                // Make the JFrame visible
-                soldLeasedFrame.setVisible(true);
+                // Create a new EmployeePage and make it visible
+                createGUI();
             }
         });
+        soldLeasedFrame.add(backButton, BorderLayout.SOUTH);
+
+        // Make the JFrame visible
+        soldLeasedFrame.setVisible(true);
+        }
+    });
 
         panel.add(viewSoldLeasedButton);
 
