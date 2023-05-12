@@ -8,3 +8,4 @@
 - have selet dealership go back to car browsing page, with only the cars at that dealership being displayed.
 - make public static variables in Main, one for currentUserID and another for currentUserType (enum)
 - fix back button on Car browsing page
+- update customerID_FK and invoiceID_FK in Car table when selling/leasing car. (Aaron) DONE

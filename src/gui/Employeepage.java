@@ -117,8 +117,11 @@ public class Employeepage {
                                 " values(%d,'%s',%d,%d,'%s');", 
                                 Integer.valueOf(customerID), typeDropdown.getSelectedItem(), Integer.valueOf(quantity), price, dateString));
                                 success = true;
+                                ResultSet rs1 = dbM.query("select seq from sqlite_sequence WHERE name = 'Invoice';");
+                                int invoiceIDSearch = rs1.getInt("seq");
+
                                 // Update Car table
-                                dbM.queryQuiet(String.format("UPDATE Car SET customerID_FK = %d WHERE VIN = '%s';", Integer.valueOf(customerID), vin));
+                                dbM.queryQuiet(String.format("UPDATE Car SET customerID_FK = %d, invoiceID_FK = %d WHERE VIN = '%s';", Integer.valueOf(customerID), invoiceIDSearch, vin));
                             }
 
                             if(success) {
@@ -190,6 +193,11 @@ public class Employeepage {
                 formPanel.add(vinLabel);
                 formPanel.add(vinField);
 
+                JLabel dealershipIDLabel = new JLabel("Dealership ID:");
+                JTextField dealershipIDField = new JTextField();
+                formPanel.add(dealershipIDLabel);
+                formPanel.add(dealershipIDField);
+
                 JLabel colorLabel = new JLabel("Color:");
                 JTextField colorField = new JTextField();
                 formPanel.add(colorLabel);
@@ -219,6 +227,7 @@ public class Employeepage {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Get the values from the form fields
+                        String dealershipID = dealershipIDField.getText();
                         String vin = vinField.getText();
                         String color = colorField.getText();
                         Integer buyPrice = Integer.parseInt(buyPriceField.getText());
@@ -227,8 +236,8 @@ public class Employeepage {
 
                         // Add the new car to the database
                         DBManager.getDBManager().queryQuiet(String.format(
-                                "INSERT INTO Car(VIN, color, buy_price, lease_price, producer) values('%s', '%s', %d, %d, '%s');",
-                                vin, color, buyPrice, leasePrice, producer));
+                                "INSERT INTO Car(VIN, color, buy_price, lease_price, producer, dealershipID_FK) values('%s', '%s', %d, %d, '%s', %d);",
+                                vin, color, buyPrice, leasePrice, producer, Integer.valueOf(dealershipID)));
 
                         // Display a success message
                         JOptionPane.showMessageDialog(addCarFrame, "Car added successfully!");
