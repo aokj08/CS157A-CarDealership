@@ -97,8 +97,6 @@ public class Employeepage {
                         // Get the values from the form fields
                         String vin = vinField.getText();
                         String customerID = customerIDField.getText();
-                        // Integer buyPrice = Integer.parseInt(buyPriceField.getText());
-                        // Integer leasePrice = Integer.parseInt(leasePriceField.getText());
                         String quantity = quantityField.getText();
 
                         // Get the car information from Car and put it into Invoice.
