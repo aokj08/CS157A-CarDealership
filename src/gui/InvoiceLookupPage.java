@@ -2,9 +2,14 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import database.DBManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class InvoiceLookupPage {
 
@@ -15,7 +20,11 @@ public class InvoiceLookupPage {
 
     public static int focusInvoice;
 
+    private DBManager dbM;
+
     public InvoiceLookupPage() {
+
+        dbM = DBManager.getDBManager();
         // Create a JFrame
         frame = new JFrame("Invoice Lookup");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +73,7 @@ public class InvoiceLookupPage {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                focusInvoice = searchField.getInt();
+                focusInvoice = Integer.parseInt(searchField.getText());
                 new InvoiceSamplePage();
             }
         });
@@ -83,9 +92,6 @@ public class InvoiceLookupPage {
                 searchField.setText("");
                 // Update the table with all the dealerships
                 model.setRowCount(0); // clear the table
-                model.addRow(row1);
-                model.addRow(row2);
-                model.addRow(row3);
                 // Open the carbrowsing tab
                 new CarBrowsingPage();
                 // Close the current page
