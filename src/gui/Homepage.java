@@ -60,7 +60,7 @@ public class Homepage {
                 try {
                     if (rs.getString("password").equals(password)) {
                         // implement closing current window if have time
-                        new CarBrowsingPage(); // Customer page
+                        new Carbrowsingpage(); // Customer page
                     } else {
                         // Display Error message
                     }

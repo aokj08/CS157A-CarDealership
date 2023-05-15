@@ -108,13 +108,15 @@ public class Main {
 		// }
 		// System.out.println(invoiceIDSearch);
 
-		ResultSet rs = dbM.query("SELECT * FROM Car;");
+		ResultSet rs = dbM.query("SELECT * FROM Customer;");
 		try {
 			while (rs.next()) {
-				System.out.println(rs.getInt("invoiceID_FK"));
-				System.out.println(rs.getString("VIN"));
-				System.out.println(rs.getInt("customerID_FK"));
-				System.out.println(rs.getInt("dealershipID_FK"));
+				System.out.println(rs.getInt("customerID"));
+				System.out.println(rs.getString("email"));
+				System.out.println(rs.getString("password"));
+
+				// System.out.println(rs.getInt("customerID_FK"));
+				// System.out.println(rs.getInt("dealershipID_FK"));
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e.getMessage());

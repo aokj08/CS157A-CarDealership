@@ -78,7 +78,7 @@ public class DealershipLookupPage {
                 model.addRow(row2);
                 model.addRow(row3);
                 // Open the carbrowsing tab
-                new CarBrowsingPage();
+                new Carbrowsingpage();
                 // Close the current page
                 frame.dispose();
             }

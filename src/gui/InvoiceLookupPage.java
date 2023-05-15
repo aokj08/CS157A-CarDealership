@@ -93,7 +93,7 @@ public class InvoiceLookupPage {
                 // Update the table with all the dealerships
                 model.setRowCount(0); // clear the table
                 // Open the carbrowsing tab
-                new CarBrowsingPage();
+                new Carbrowsingpage();
                 // Close the current page
                 frame.dispose();
             }
