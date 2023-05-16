@@ -73,62 +73,10 @@ public class Main {
 				);
 	}
 
-	/**
-	 * For testing purposes
-	 */
-	public void insertTable() {
-
-		dbM.queryQuiet(String.format("UPDATE Car SET customerID_FK = %d, invoiceID_FK = %d WHERE VIN = '%s';", Integer.valueOf(1), 4, 222));
-
-	}
-
-	public void dropTable() {
-		dbM.queryQuiet("DROP TABLE Car;");
-	}
-
-	public void dropAll() {
-		dbM.queryQuiet("DROP TABLE Car;");
-		dbM.queryQuiet("DROP TABLE Customer;");
-		dbM.queryQuiet("DROP TABLE Employee;");
-		dbM.queryQuiet("DROP TABLE Dealership;");
-		dbM.queryQuiet("DROP TABLE Invoice;");
-	}
-	/**
-	 * For testing purposes
-	 * @throws SQLException
-	 */
-	public void queryTable() {
-		// ResultSet rs = dbM.query("select seq from sqlite_sequence WHERE name = 'Invoice';");
-		// int invoiceIDSearch = -1;
-		// try {
-		// 	invoiceIDSearch = rs.getInt("seq");
-		// } catch (SQLException e) {
-		// 	// TODO Auto-generated catch block
-		// 	e.printStackTrace();
-		// }
-		// System.out.println(invoiceIDSearch);
-
-		ResultSet rs = dbM.query("SELECT * FROM Customer;");
-		try {
-			while (rs.next()) {
-				System.out.println(rs.getInt("customerID"));
-				System.out.println(rs.getString("email"));
-				System.out.println(rs.getString("password"));
-
-				// System.out.println(rs.getInt("customerID_FK"));
-				// System.out.println(rs.getInt("dealershipID_FK"));
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-	}
 
 	public static void main(String[] args) {
 		Main obj = new Main();
-		// obj.insertTable();
-		// obj.queryTable();
 		new Homepage();
-		// obj.dropAll();
 	}
 
 }

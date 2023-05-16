@@ -35,3 +35,5 @@ src/gui/HomePage.java
 *.log
 .metadata/.plugins/org.eclipse.ui.intro/introstate
 *.class
+src/.DS_Store
+src/.DS_Store
