@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 
 import database.DBManager;
 
-public class Employeepage {
+public class EmployeePage {
 
     private DBManager dbM;
 
@@ -25,7 +25,7 @@ public class Employeepage {
     private JButton viewAvailableButton;
     private JButton viewSoldLeasedButton;
 
-    public Employeepage() {
+    public EmployeePage() {
         createGUI();
     }
 
@@ -281,7 +281,7 @@ public class Employeepage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create new instance of DealershipLookupPage
-                Carbrowsingpage Carbrowsingpage = new Carbrowsingpage();
+                CarBrowsingPage Carbrowsingpage = new CarBrowsingPage();
                 // Close current frame
                 frame.dispose();
             }
@@ -374,6 +374,6 @@ public class Employeepage {
     }
 
     public static void main(String[] args) {
-        Employeepage employeePage = new Employeepage();
+        EmployeePage EmployeePage = new EmployeePage();
     }
 }

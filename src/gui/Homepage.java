@@ -8,13 +8,13 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Homepage {
+public class HomePage {
 
     private static DBManager dbM;
 
-    public Homepage() {
+    public HomePage() {
         dbM = DBManager.getDBManager();
-        JFrame frame = new JFrame("Dealership Homepage");
+        JFrame frame = new JFrame("Dealership HomePage");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
         frame.setLocationRelativeTo(null); // Center the window on the screen
@@ -47,7 +47,7 @@ public class Homepage {
                                 email, password));
                 try {
                     if (rs.getString("password").equals(password)) {
-                        new Employeepage();
+                        new EmployeePage();
                     } else {
                         // Display Error message
                     }
@@ -60,7 +60,7 @@ public class Homepage {
                 try {
                     if (rs.getString("password").equals(password)) {
                         // implement closing current window if have time
-                        new Carbrowsingpage(); // Customer page
+                        new CarBrowsingPage(); // Customer page
                     } else {
                         // Display Error message
                     }
@@ -86,7 +86,7 @@ public class Homepage {
         JButton signupButton = new JButton("Sign Up");
         signupButton.addActionListener(e -> {
             // Open Signup JFrame
-            new Signup();
+            new SignUp();
         });
         signupPanel.add(signupLabel);
         signupPanel.add(signupButton);

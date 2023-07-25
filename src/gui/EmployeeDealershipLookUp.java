@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Empdealershiplookup {
+public class EmployeeDealershipLookUp {
 
     private JFrame frame;
     private JTable table;
@@ -14,7 +14,7 @@ public class Empdealershiplookup {
     private JTextField searchField;
     private Object[] row1, row2, row3;
 
-    public Empdealershiplookup() {
+    public EmployeeDealershipLookUp() {
         // Create a JFrame
         frame = new JFrame("Dealerships in Bay Area - Employee View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +78,7 @@ public class Empdealershiplookup {
                 model.addRow(row2);
                 model.addRow(row3);
                 // Open the employee
-                new Employeepage();
+                new EmployeePage();
                 // Close the current page
                 frame.dispose();
             }

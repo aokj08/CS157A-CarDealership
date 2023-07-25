@@ -9,7 +9,7 @@ import java.awt.event.*;
 
 import insert.CustomerInfo;
 
-public class Signup extends JFrame implements ActionListener {
+public class SignUp extends JFrame implements ActionListener {
 
     private CustomerInfo custInfo;
     private static DBManager dbM;
@@ -19,7 +19,7 @@ public class Signup extends JFrame implements ActionListener {
     private JPasswordField passwordField;
     private JButton signupButton, cancelButton;
 
-    public Signup() {
+    public SignUp() {
         dbM = DBManager.getDBManager();
         
         setTitle("Sign Up");
@@ -120,6 +120,6 @@ public class Signup extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new Signup();
+        new SignUp();
     }
 }
